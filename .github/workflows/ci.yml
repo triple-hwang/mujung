@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: TypeScript type check
+        run: bun run type-check
+
+      - name: Biome lint check
+        run: bun run lint
+
+      - name: Biome format check
+        run: bun run check
+
+      - name: Build test
+        run: bun run build
+
+  # 포맷팅이 안 돼있으면 실패시키기
+  format-check:
+    name: Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check if files are formatted
+        run: |
+          bun run format
+          if ! git diff --exit-code; then
+            echo "❌ Code is not properly formatted!"
+            echo "Run 'bun run format' and commit the changes."
+            exit 1
+          fi
+          echo "✅ All files are properly formatted!"
