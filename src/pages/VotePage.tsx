@@ -1,0 +1,9 @@
+const VotePage = () => {
+  return (
+    <div>
+      <h2>투표 페이지</h2>
+    </div>
+  );
+};
+
+export default VotePage;
