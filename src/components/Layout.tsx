@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-
+import MujungLogo from "../assets/mujungLogo.tsx";
 const Layout = () => {
   return (
     <div>
       <header>
-        <h1>MUJUNG</h1>
+        <MujungLogo />
       </header>
       <main>
         <Outlet />
