@@ -24,7 +24,14 @@ export function useTopCandidates(limit = 5) {
         const fetchCandidates = async () => {
             const { data, error } = await supabase
                 .from('vote_aggregate')
-                .select(`link_id, vote_count, spotify_information (song_name, song_artist)`)
+                .select(`
+    link_id,
+    vote_count,
+    spotify_information!vote_aggregate_link_id_fkey (
+      song_name,
+      song_artist
+    )
+  `)
                 .order('vote_count', { ascending: false })
                 .limit(limit);
 

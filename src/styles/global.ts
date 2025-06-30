@@ -10,9 +10,21 @@ const global = css`
     box-sizing: border-box;
   }
 
-  html, body {
+  html {
     width: 100%;
     height: 100%;
+    font-family: 'Freesentation', sans-serif;
+    background-color: ${color.white};
+    color: ${color.black};
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    width: 100%;
+    max-width: 80%;
+    min-width: 320px;
+    height: 100%;
+    margin: 0 auto; 
     font-family: 'Freesentation', sans-serif;
     background-color: ${color.white};
     color: ${color.black};
