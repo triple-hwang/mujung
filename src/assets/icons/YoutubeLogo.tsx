@@ -3,7 +3,7 @@ type Props = {
     height?: number | string;
 };
 
-const youtubeLogo = ({width=24, height=18}: Props) => (
+const YoutubeLogo = ({width=24, height=18}: Props) => (
     <svg width={width} height={height} viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_154_213)">
             <g clip-path="url(#clip1_154_213)">
@@ -23,4 +23,4 @@ const youtubeLogo = ({width=24, height=18}: Props) => (
 
 );
 
-export default youtubeLogo;
+export default YoutubeLogo;

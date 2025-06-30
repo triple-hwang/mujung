@@ -3,7 +3,7 @@ type Props = {
     height?: number | string;
 };
 
-const dashboardVote = ({ width=114, height=108 }: Props) => (
+const Vote = ({ width=114, height=108 }: Props) => (
     <svg width={width} height={height} viewBox="0 0 114 108" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="7" width="100" height="108" rx="16" fill="white"/>
 <path d="M25 89L95 89" stroke="#EDEDED" stroke-width="3" stroke-linecap="round"/>
@@ -14,4 +14,4 @@ const dashboardVote = ({ width=114, height=108 }: Props) => (
     </svg>
 );
 
-export default dashboardVote;
+export default Vote;

@@ -3,7 +3,7 @@ type Props = {
     height?: number | string;
 };
 
-const voteChecked = ({ width = 16, height = 16 }: Props) => (
+const VoteChecked = ({ width = 16, height = 16 }: Props) => (
     <svg width={width} height={height} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" fill="#6B7CE9" />
         <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#6B7CE9" />
@@ -11,4 +11,4 @@ const voteChecked = ({ width = 16, height = 16 }: Props) => (
         />
     </svg>
 );
-export default voteChecked;
+export default VoteChecked;

@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import color from "../styles/color";
 import styled from '@emotion/styled';
+import Song from './Song';
 
-const DashboardList =() =>{
+const SongList =() =>{
     return (
         <StyledDashBoardList>
-            cns
+            <Song/>
         </StyledDashBoardList>
     )
 
 }
 
-export default DashboardList;
+export default SongList;
 
 const StyledDashBoardList = styled.div`
     background-color:${color.secondary};

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import MujungLogo from "../assets/mujungLogo.tsx";
+import MujungLogo from "../assets/MujungLogo.tsx";
 const Layout = () => {
   return (
     <div>

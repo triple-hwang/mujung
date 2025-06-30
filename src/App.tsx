@@ -4,10 +4,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import { queryClient } from './lib/react-query';
 import { DashboardPage, MainPage, NotFoundPage, VotePage } from './pages';
+import global from "./styles/global";
+import {Global} from "@emotion/react";
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+        <Global styles={global}/>
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
@@ -16,7 +19,7 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
-        </Routes>
+        </Routes>zw
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
