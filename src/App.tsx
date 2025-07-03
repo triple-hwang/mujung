@@ -1,7 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
+import { Layout } from './layout';
 import { queryClient } from './lib/react-query';
 import { DashboardPage, MainPage, NotFoundPage, VotePage } from './pages';
 
