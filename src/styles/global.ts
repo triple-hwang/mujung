@@ -1,78 +1,74 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import color from './color';
+import { FreesentationFont } from '../assets';
 
-const global = css`
+const fontFaces = css`
+  @font-face {
+    font-family: 'Freesentation';
+    src: url(${FreesentationFont}) format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+`;
+
+export const globalStyles = css`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-  html {
-    width: 100%;
-    height: 100%;
-    font-family: 'Freesentation', sans-serif;
-    background-color: ${color.white};
-    color: ${color.black};
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+  html,
   body {
     width: 100%;
-    max-width: 80%;
-    min-width: 320px;
     height: 100%;
-    margin: 0 auto;
-    font-family: 'Freesentation', sans-serif;
-    background-color: ${color.white};
-    color: ${color.black};
-    line-height: 1.5;
+    font-family: 'Freesentation', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
     -webkit-font-smoothing: antialiased;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
   }
 
   button {
-    font-family: 'Freesentation', sans-serif;
+    background: none;
     border: none;
     cursor: pointer;
-    background: none;
+    font-family: inherit;
   }
 
-  ul,
-  ol {
-    list-style: none;
-  }
-`;
-
-const fontFaces = css`
-  @font-face {
-    font-family: 'Freesentation';
-    font-weight: 400;
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2')
-      format('woff2');
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 
-  @font-face {
-    font-family: 'Freesentation';
-    font-weight: 500;
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2')
-      format('woff2');
+  input,
+  textarea {
+    outline: none;
+    border: none;
+    font-family: inherit;
   }
 
-  @font-face {
-    font-family: 'Freesentation';
-    font-weight: 700;
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2')
-      format('woff2');
+  @media (max-width: 375px) {
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    input,
+    textarea {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
   }
 `;
 
 export default css`
   ${fontFaces}
-  ${global}
+  ${globalStyles}
 `;
