@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
-            <Route path="vote" element={<VotePage />} />
+            <Route path="votes" element={<VotePage />} />
             <Route path="submit" element={<SubmitPage />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="*" element={<NotFoundPage />} />

@@ -15,10 +15,24 @@ const VotePage = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (selectedSong) {
-      const res = await submitVote(selectedSong);
-      console.log('투표 결과:', res);
-      alert('투표가 완료되었습니다!');
+    const email = localStorage.getItem('email');
+    if (!email) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    if (!selectedSong) return;
+
+    try {
+      const res = await submitVote(selectedSong, email);
+      alert(res.message);
+    } catch (err: any) {
+      const status = err.response?.status;
+      if (status === 400) alert('link_id 누락');
+      else if (status === 403) alert('bssm 이메일만 허용됩니다.');
+      else if (status === 404) alert('유저 정보가 없습니다.');
+      else if (status === 409) alert('이미 투표했습니다.');
+      else alert('서버 오류');
     }
   };
 
@@ -28,14 +42,16 @@ const VotePage = () => {
           <div css={sectionStyles.listWrapper}>
             {songs.map((song) => (
                 <SongItem
-                    key={song.id}
-                    title={song.title}
-                    spotifyUrl={song.spotify_url}
-                    youtubeUrl={song.youtube_url}
-                    linkId={song.id}
+                    key={song.link_id}
+                    title={`${song.song_name} - ${song.song_artist}`}
+                    songName={song.song_name}
+                    songArtist={song.song_artist}
+                    linkId={song.link_id}
+                    spotifyUrl={song.link}
+                    youtubeUrl=""
                     showRadio
-                    selected={selectedSong === song.id}
-                    onSelect={() => setSelectedSong(song.id)}
+                    selected={selectedSong === song.link_id}
+                    onSelect={() => setSelectedSong(song.link_id)}
                 />
             ))}
           </div>

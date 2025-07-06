@@ -1,33 +1,48 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { LinkIcon, CheckIcon } from '../assets';
 import { colors, typography, spacing, sizes, borderRadius, shadows, layout, animations } from '../styles/tokens';
-import {useState} from "react";
+import { useModalStore } from '../store/useModalStore';
+import SongLinkModal from './SongLinkModal';
+import { searchTrackLinks } from '../lib/api';
 
 interface SongItemProps {
   title: string;
   songName: string;
   songArtist: string;
+  linkId: string;
   spotifyUrl?: string;
   youtubeUrl?: string;
-  linkId: string;
   showRadio?: boolean;
   selected?: boolean;
   onSelect?: () => void;
 }
-const SongItem = ({ title, showRadio = false, selected = false, onSelect }: SongItemProps) => {
+
+const SongItem = ({
+                    title,
+                    songName,
+                    songArtist,
+                    linkId,
+                    showRadio = false,
+                    selected = false,
+                    onSelect,
+                  }: SongItemProps) => {
+  const { openId, setOpenId } = useModalStore();
+  const isOpen = openId === linkId;
+  const [links, setLinks] = useState<{ spotify_url: string; youtube_search_url: string } | null>(null);
+
   const handleClick = () => {
     if (showRadio && onSelect) {
       onSelect();
     }
   };
-  const [links, setLinks] = useState<{ spotify_url: string; youtube_search_url: string } | null>(null);
 
   const handleLinkClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
       const result = await searchTrackLinks(songName, songArtist);
       setLinks(result);
-      setShowModal(true);
+      setOpenId(linkId);
     } catch (error) {
       alert('링크를 찾을 수 없습니다.');
     }
@@ -41,44 +56,50 @@ const SongItem = ({ title, showRadio = false, selected = false, onSelect }: Song
   };
 
   return (
-    <div
-      css={[itemStyle, selected && selectedStyle]}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      role={showRadio ? 'radio' : undefined}
-      aria-checked={showRadio ? selected : undefined}
-      tabIndex={showRadio ? 0 : undefined}
-    >
-      <div css={contentStyle}>
-        <div css={leftContentStyle}>
-          {showRadio && (
-            <div css={radioContainerStyle}>
-              {selected ? (
-                <img src={CheckIcon} alt="선택됨" css={checkIconStyle} />
-              ) : (
-                <div css={radioButtonStyle} />
-              )}
-            </div>
-          )}
-          <span css={titleStyle}>{title}</span>
+      <div
+          css={[itemStyle, selected && selectedStyle, { position: 'relative' }]}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          role={showRadio ? 'radio' : undefined}
+          aria-checked={showRadio ? selected : undefined}
+          tabIndex={showRadio ? 0 : undefined}
+      >
+        <div css={contentStyle}>
+          <div css={leftContentStyle}>
+            {showRadio && (
+                <div css={radioContainerStyle}>
+                  {selected ? (
+                      <img src={CheckIcon} alt="선택됨" css={checkIconStyle} />
+                  ) : (
+                      <div css={radioButtonStyle} />
+                  )}
+                </div>
+            )}
+            <span css={titleStyle}>{title}</span>
+          </div>
+          <button
+              css={linkButtonStyle}
+              type="button"
+              aria-label="링크 열기"
+              onClick={handleLinkClick}
+          >
+            <img src={LinkIcon} alt="링크" css={linkIconStyle} />
+          </button>
         </div>
-        
-        <button
-          css={linkButtonStyle}
-          type="button"
-          aria-label="링크 열기"
-          onClick={handleLinkClick}
-        >
-          <img src={LinkIcon} alt="" css={linkIconStyle} />
-        </button>
+
+        {isOpen && links && (
+            <SongLinkModal
+                spotifyUrl={links.spotify_url}
+                youtubeUrl={links.youtube_search_url}
+                onClose={() => setOpenId(null)}
+            />
+        )}
       </div>
-    </div>
   );
 };
 
 export default SongItem;
 
-// Styles
 const itemStyle = css`
   width: 100%;
   padding: ${layout.padding.item};
@@ -86,11 +107,11 @@ const itemStyle = css`
   border-radius: ${borderRadius.small};
   cursor: pointer;
   transition: ${animations.transition.fast};
-  
+
   &:hover {
     background: ${colors.background.gray};
   }
-  
+
   &:focus-visible {
     outline: 2px solid ${colors.primary};
     outline-offset: 2px;
@@ -114,7 +135,7 @@ const leftContentStyle = css`
   align-items: flex-end;
   gap: ${spacing.xl};
   flex: 1;
-  min-width: 0; // 텍스트 overflow 방지
+  min-width: 0;
 `;
 
 const radioContainerStyle = css`
@@ -164,11 +185,11 @@ const linkButtonStyle = css`
   flex-shrink: 0;
   border-radius: ${borderRadius.small};
   transition: ${animations.transition.fast};
-  
+
   &:hover {
     background: rgba(0, 0, 0, 0.05);
   }
-  
+
   &:focus-visible {
     outline: 2px solid ${colors.primary};
     outline-offset: 2px;

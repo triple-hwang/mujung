@@ -9,8 +9,11 @@ export const fetchSongs = async () => {
     return res.data;
 };
 
-export const submitVote = async (songId: string) => {
-    const res = await api.post('/vote', { songId });
+export const submitVote = async (linkId: string, email: string) => {
+    const res = await axios.post('https://mujung-back-vercel.vercel.app/vote', {
+        link_id: linkId,
+        email: email,
+    });
     return res.data;
 };
 
@@ -27,3 +30,11 @@ export const searchTrackLinks = async (title: string, artist: string) => {
         youtube_search_url: string;
     };
 };
+
+export const createSong = (link: string, email: string) => {
+    return axios.post('https://mujung-back-vercel.vercel.app/songs', {
+        link,
+        email,
+    }).then(res => res.data);
+};
+

@@ -1,9 +1,14 @@
 import { css } from '@emotion/react';
 import { Logo } from '../assets';
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/');
+    };
   return (
-    <header css={headerStyle}>
+    <header css={headerStyle} onClick={() => handleClick()}>
       <img src={Logo} alt="MUJUNG" css={logoStyle} />
     </header>
   );
@@ -11,7 +16,6 @@ const Header = () => {
 
 export default Header;
 
-// Styles
 const headerStyle = css`
   width: 100%;
   height: 100px;
@@ -19,7 +23,8 @@ const headerStyle = css`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+    justify-content: flex-start;
+    padding: 8px 20px 20px 20px;
 `;
 
 const logoStyle = css`
