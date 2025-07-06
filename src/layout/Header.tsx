@@ -13,13 +13,13 @@ export default Header;
 
 export const headerStyle = css`
   width: 100%;
-  height: 120px;
+  height: 100px; /* top(40px) + logo height(39px) + bottom padding(21px) */
   position: relative;
 `;
 
 export const logoStyle = css`
   position: absolute;
-  top: 60px;
+  top: 40px;
   left: 20px;
   width: 196px;
   height: 39px;
