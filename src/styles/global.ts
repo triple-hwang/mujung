@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FreesentationFont } from '../assets';
 
 const fontFaces = css`
   @font-face {
     font-family: 'Freesentation';
-    src: url(${FreesentationFont}) format('truetype');
+    src: url('/fonts/FreesentationVF.ttf') format('truetype');
     font-weight: 100 900;
-    font-display: swap;
+    font-style: normal;
   }
 `;
 
@@ -18,16 +17,37 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 
+  @font-face {
+    font-family: 'Freesentation';
+    src: url('/fonts/FreesentationVF.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
   html,
   body {
     width: 100%;
     height: 100%;
-    font-family: 'Freesentation', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-      sans-serif;
+    line-height: 1.5;
+  }
+
+  body {
+    background: #ebefff;
+    font-family: 'Freesentation', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  #root {
+    width: 375px;
+    height: 812px;
+    background: white;
+    overflow-y: auto;
   }
 
   button {

@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
+import { colors, layout } from '../styles/tokens';
 
 const Layout = () => {
   return (
@@ -25,9 +26,9 @@ const containerStyle = css`
 `;
 
 const mobileFrameStyle = css`
-  width: 375px;
-  height: 812px;
-  background-color: #ffffff;
+  width: ${layout.container.mobile.width};
+  height: ${layout.container.mobile.height};
+  background-color: ${colors.background.white};
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   position: relative;
