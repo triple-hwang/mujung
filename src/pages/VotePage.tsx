@@ -32,6 +32,7 @@ const VotePage = () => {
             <SongItem
               key={song.id}
               title={song.title}
+              linkId={song.id.toString()}
               showRadio
               selected={selectedSong === song.id}
               onSelect={() => handleSongSelect(song.id)}

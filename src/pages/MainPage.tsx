@@ -29,7 +29,7 @@ const MainPage = () => {
       <Section title="현재 순위" noPadding>
         <div css={sectionStyles.listWrapper}>
           {mockSongs.map((song) => (
-            <SongItem key={song.id} title={song.title} />
+            <SongItem key={song.id} title={song.title}  linkId={song.id.toString()} />
           ))}
         </div>
       </Section>

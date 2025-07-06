@@ -1,15 +1,31 @@
 import { css } from '@emotion/react';
 import { LinkIcon, CheckIcon } from '../assets';
 import { colors, typography, spacing, sizes, borderRadius, shadows, layout, animations } from '../styles/tokens';
+import { useModalStore } from '../store/useModalStore';
+import SongLinkModal from './SongLinkModal';
 
 interface SongItemProps {
   title: string;
+  spotifyUrl?: string;
+  youtubeUrl?: string;
+  linkId: string;
   showRadio?: boolean;
   selected?: boolean;
   onSelect?: () => void;
 }
 
-const SongItem = ({ title, showRadio = false, selected = false, onSelect }: SongItemProps) => {
+const SongItem = ({
+                    title,
+                    spotifyUrl,
+                    youtubeUrl,
+                    linkId,
+                    showRadio = false,
+                    selected = false,
+                    onSelect,
+                  }: SongItemProps) => {
+  const { openId, setOpenId } = useModalStore();
+  const isOpen = openId === linkId;
+
   const handleClick = () => {
     if (showRadio && onSelect) {
       onSelect();
@@ -24,44 +40,53 @@ const SongItem = ({ title, showRadio = false, selected = false, onSelect }: Song
   };
 
   return (
-    <div
-      css={[itemStyle, selected && selectedStyle]}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      role={showRadio ? 'radio' : undefined}
-      aria-checked={showRadio ? selected : undefined}
-      tabIndex={showRadio ? 0 : undefined}
-    >
-      <div css={contentStyle}>
-        <div css={leftContentStyle}>
-          {showRadio && (
-            <div css={radioContainerStyle}>
-              {selected ? (
-                <img src={CheckIcon} alt="선택됨" css={checkIconStyle} />
-              ) : (
-                <div css={radioButtonStyle} />
-              )}
-            </div>
-          )}
-          <span css={titleStyle}>{title}</span>
+      <div
+          css={[itemStyle, selected && selectedStyle, { position: 'relative' }]}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          role={showRadio ? 'radio' : undefined}
+          aria-checked={showRadio ? selected : undefined}
+          tabIndex={showRadio ? 0 : undefined}
+      >
+        <div css={contentStyle}>
+          <div css={leftContentStyle}>
+            {showRadio && (
+                <div css={radioContainerStyle}>
+                  {selected ? (
+                      <img src={CheckIcon} alt="선택됨" css={checkIconStyle} />
+                  ) : (
+                      <div css={radioButtonStyle} />
+                  )}
+                </div>
+            )}
+            <span css={titleStyle}>{title}</span>
+          </div>
+          <button
+              css={linkButtonStyle}
+              type="button"
+              aria-label="링크 열기"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenId(isOpen ? null : linkId);
+              }}
+          >
+            <img src={LinkIcon} alt="" css={linkIconStyle} />
+          </button>
         </div>
-        
-        <button
-          css={linkButtonStyle}
-          type="button"
-          aria-label="링크 열기"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <img src={LinkIcon} alt="" css={linkIconStyle} />
-        </button>
+
+        {isOpen && (
+            <SongLinkModal
+                spotifyUrl={spotifyUrl ?? '#'}
+                youtubeUrl={youtubeUrl ?? '#'}
+                onClose={() => setOpenId(null)}
+            />
+        )}
       </div>
-    </div>
   );
 };
 
 export default SongItem;
 
-// Styles
 const itemStyle = css`
   width: 100%;
   padding: ${layout.padding.item};
@@ -69,11 +94,11 @@ const itemStyle = css`
   border-radius: ${borderRadius.small};
   cursor: pointer;
   transition: ${animations.transition.fast};
-  
+
   &:hover {
     background: ${colors.background.gray};
   }
-  
+
   &:focus-visible {
     outline: 2px solid ${colors.primary};
     outline-offset: 2px;
@@ -97,7 +122,7 @@ const leftContentStyle = css`
   align-items: flex-end;
   gap: ${spacing.xl};
   flex: 1;
-  min-width: 0; // 텍스트 overflow 방지
+  min-width: 0;
 `;
 
 const radioContainerStyle = css`
@@ -147,11 +172,11 @@ const linkButtonStyle = css`
   flex-shrink: 0;
   border-radius: ${borderRadius.small};
   transition: ${animations.transition.fast};
-  
+
   &:hover {
     background: rgba(0, 0, 0, 0.05);
   }
-  
+
   &:focus-visible {
     outline: 2px solid ${colors.primary};
     outline-offset: 2px;

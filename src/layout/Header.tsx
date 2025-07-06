@@ -11,7 +11,6 @@ const Header = () => {
 
 export default Header;
 
-// Styles
 const headerStyle = css`
   width: 100%;
   height: 100px;
@@ -19,7 +18,8 @@ const headerStyle = css`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+    justify-content: flex-start;
+    padding: 8px 20px 20px 20px;
 `;
 
 const logoStyle = css`
