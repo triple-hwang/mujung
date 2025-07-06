@@ -1,30 +1,41 @@
 import { css } from '@emotion/react';
-import { VoteImg, SubmitImg, LinkIcon } from '../assets';
+import { useNavigate } from 'react-router-dom';
+import { VoteImg, SubmitImg, Logo } from '../assets';
+import Section from '../components/Section';
+import SongItem from '../components/SongItem';
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
+  const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigate(path);
+    }
+  };
+
   return (
     <div css={containerStyle}>
+      {/* 로고 */}
+      <img src={Logo} alt="뮤중" css={logoStyle} />
+
       {/* 현재 순위 섹션 */}
-      <section css={rankingSection}>
-        <h2>현재 순위</h2>
-        <div css={rankingListWrapper}>
+      <Section title="현재 순위" noPadding>
+        <div css={listWrapper}>
+          {/* biome-ignore lint/suspicious/noArrayIndexKey: 임시 데이터 */}
           {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} css={rankingItemWrapper}>
-              <div css={rankingItem}>
-                <div css={rankingItemContent}>
-                  <span>루시 - 여름</span>
-                  <button css={linkButton}>
-                    <img src={LinkIcon} alt="링크" />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <SongItem key={index} title="루시 - 여름" />
           ))}
         </div>
-      </section>
+      </Section>
 
       {/* 투표하기 섹션 */}
-      <section css={cardSection}>
+      <button
+        type="button"
+        css={cardSection}
+        onClick={() => navigate('/vote')}
+        onKeyDown={handleKeyDown('/vote')}
+      >
         <div css={cardWrapper}>
           <div css={textWrapper}>
             <h3>투표하기</h3>
@@ -38,10 +49,15 @@ const MainPage = () => {
             <img src={VoteImg} alt="투표하기" css={cardImage} />
           </div>
         </div>
-      </section>
+      </button>
 
       {/* 투표 등록 섹션 */}
-      <section css={cardSection}>
+      <button
+        type="button"
+        css={cardSection}
+        onClick={() => navigate('/submit')}
+        onKeyDown={handleKeyDown('/submit')}
+      >
         <div css={cardWrapper}>
           <div css={imageWrapper}>
             <img src={SubmitImg} alt="투표 등록" css={cardImage} />
@@ -55,7 +71,7 @@ const MainPage = () => {
             </p>
           </div>
         </div>
-      </section>
+      </button>
     </div>
   );
 };
@@ -63,77 +79,35 @@ const MainPage = () => {
 export default MainPage;
 
 const containerStyle = css`
-  padding: 8px 20px 20px 20px;
+  padding: 40px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 `;
 
-const rankingSection = css`
-  padding: 20px;
-  background: #ebefff;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  h2 {
-    color: #000920;
-    font-size: 20px;
-    font-family: 'Freesentation';
-    font-weight: 700;
-  }
+const logoStyle = css`
+  width: 120px;
+  margin-bottom: 21px;
+  align-self: center;
 `;
 
-const rankingListWrapper = css`
+const listWrapper = css`
   display: flex;
   flex-direction: column;
   gap: 8px;
-`;
-
-const rankingItemWrapper = css`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const rankingItem = css`
-  padding: 8px 10px;
-  background: white;
-  border-radius: 7px;
-`;
-
-const rankingItemContent = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  span {
-    color: #575757;
-    font-size: 14px;
-    font-family: 'Freesentation';
-    font-weight: 400;
-  }
-`;
-
-const linkButton = css`
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  margin: 0 -4px; /* 14px - 4px = 10px 여백 */
 `;
 
 const cardSection = css`
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
 `;
 
 const cardWrapper = css`
-  width: 100%;
   padding: 20px;
   background: #ebefff;
   border-radius: 16px;
@@ -154,6 +128,7 @@ const textWrapper = css`
     font-size: 20px;
     font-family: 'Freesentation';
     font-weight: 700;
+    line-height: 1.2;
   }
 
   p {
@@ -174,6 +149,7 @@ const imageWrapper = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 `;
 
 const cardImage = css`
