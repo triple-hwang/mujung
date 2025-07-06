@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
-import { colors, typography, spacing, borderRadius, layout } from '../styles/tokens';
+import { colors, typography, borderRadius, layout } from '../styles/tokens';
 
 interface SectionProps {
   title: string;

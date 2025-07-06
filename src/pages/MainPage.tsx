@@ -3,14 +3,17 @@ import { VoteImg, SubmitImg } from '../assets';
 import Section from '../components/Section';
 import SongItem from '../components/SongItem';
 import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
+import { useEffect, useState } from 'react';
+import {fetchSongs} from "../lib/api";
+import { Song } from '../types/song';
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const [songs, setSongs] = useState<Song[]>([]);
 
-  const mockSongs = Array.from({ length: 5 }, (_, index) => ({
-    id: index,
-    title: '루시 - 여름',
-  }));
+  useEffect(() => {
+    fetchSongs().then(setSongs);
+  }, []);
 
   const handleCardClick = (path: string) => {
     navigate(path);
@@ -28,8 +31,14 @@ const MainPage = () => {
       {/* 현재 순위 섹션 */}
       <Section title="현재 순위" noPadding>
         <div css={sectionStyles.listWrapper}>
-          {mockSongs.map((song) => (
-            <SongItem key={song.id} title={song.title} />
+          {songs.map((song) => (
+              <SongItem
+                  key={song.link_id}
+                  title={`${song.song_name} - ${song.song_artist}`}
+                  linkId={song.link_id}
+                  spotifyUrl={song.link}
+                  youtubeUrl=""
+              />
           ))}
         </div>
       </Section>

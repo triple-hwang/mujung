@@ -1,18 +1,35 @@
 import { css } from '@emotion/react';
 import { LinkIcon, CheckIcon } from '../assets';
 import { colors, typography, spacing, sizes, borderRadius, shadows, layout, animations } from '../styles/tokens';
+import {useState} from "react";
 
 interface SongItemProps {
   title: string;
+  songName: string;
+  songArtist: string;
+  spotifyUrl?: string;
+  youtubeUrl?: string;
+  linkId: string;
   showRadio?: boolean;
   selected?: boolean;
   onSelect?: () => void;
 }
-
 const SongItem = ({ title, showRadio = false, selected = false, onSelect }: SongItemProps) => {
   const handleClick = () => {
     if (showRadio && onSelect) {
       onSelect();
+    }
+  };
+  const [links, setLinks] = useState<{ spotify_url: string; youtube_search_url: string } | null>(null);
+
+  const handleLinkClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const result = await searchTrackLinks(songName, songArtist);
+      setLinks(result);
+      setShowModal(true);
+    } catch (error) {
+      alert('링크를 찾을 수 없습니다.');
     }
   };
 
@@ -50,7 +67,7 @@ const SongItem = ({ title, showRadio = false, selected = false, onSelect }: Song
           css={linkButtonStyle}
           type="button"
           aria-label="링크 열기"
-          onClick={(e) => e.stopPropagation()}
+          onClick={handleLinkClick}
         >
           <img src={LinkIcon} alt="" css={linkIconStyle} />
         </button>
