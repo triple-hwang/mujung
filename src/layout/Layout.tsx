@@ -7,7 +7,9 @@ const Layout = () => {
     <div css={containerStyle}>
       <div css={mobileFrameStyle}>
         <Header />
-        <Outlet />
+        <main css={mainStyle}>
+          <Outlet />
+        </main>
       </div>
     </div>
   );
@@ -15,9 +17,10 @@ const Layout = () => {
 
 export default Layout;
 
+// Styles
 const containerStyle = css`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,8 +30,15 @@ const containerStyle = css`
 const mobileFrameStyle = css`
   width: 375px;
   height: 812px;
-  background-color: #ffffff;
+  background-color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+const mainStyle = css`
+  flex: 1;
+  overflow-y: auto;
 `;
