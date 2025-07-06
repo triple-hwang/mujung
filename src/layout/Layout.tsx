@@ -1,14 +1,15 @@
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import { colors, layout } from '../styles/tokens';
 
 const Layout = () => {
   return (
     <div css={containerStyle}>
       <div css={mobileFrameStyle}>
         <Header />
-        <Outlet />
+        <main css={mainStyle}>
+          <Outlet />
+        </main>
       </div>
     </div>
   );
@@ -16,9 +17,10 @@ const Layout = () => {
 
 export default Layout;
 
+// Styles
 const containerStyle = css`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,10 +28,17 @@ const containerStyle = css`
 `;
 
 const mobileFrameStyle = css`
-  width: ${layout.container.mobile.width};
-  height: ${layout.container.mobile.height};
-  background-color: ${colors.background.white};
+  width: 375px;
+  height: 812px;
+  background-color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+const mainStyle = css`
+  flex: 1;
+  overflow-y: auto;
 `;

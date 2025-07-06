@@ -1,8 +1,9 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Global } from '@emotion/react';
-import { MainPage, VotePage, SubmitPage } from './pages';
+import { Layout } from './layout';
+import { MainPage, VotePage, SubmitPage, DashboardPage, NotFoundPage } from './pages';
 import { queryClient } from './lib/react-query';
 import { globalStyles } from './styles/global';
 
@@ -12,10 +13,13 @@ const App = () => {
       <Global styles={globalStyles} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/vote" element={<VotePage />} />
-          <Route path="/submit" element={<SubmitPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<MainPage />} />
+            <Route path="vote" element={<VotePage />} />
+            <Route path="submit" element={<SubmitPage />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

@@ -1,12 +1,6 @@
 import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
-import {
-  colors,
-  typography,
-  spacing,
-  borderRadius,
-  layout,
-} from '../styles/tokens';
+import { colors, typography, spacing, borderRadius, layout } from '../styles/tokens';
 
 interface SectionProps {
   title: string;
@@ -25,13 +19,14 @@ const Section = ({ title, children, noPadding = false }: SectionProps) => {
 
 export default Section;
 
+// Styles
 const sectionStyle = css`
-  padding: ${spacing.xxl};
+  padding: ${layout.padding.sectionFull};
   background: ${colors.background.section};
   border-radius: ${borderRadius.medium};
   display: flex;
   flex-direction: column;
-  gap: ${spacing.lg};
+  gap: ${layout.gap.medium};
 `;
 
 const noPaddingStyle = css`
@@ -44,4 +39,5 @@ const titleStyle = css`
   font-family: ${typography.fontFamily.primary};
   font-weight: ${typography.fontWeight.bold};
   line-height: ${typography.lineHeight.tight};
+  margin: 0;
 `;

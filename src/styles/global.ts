@@ -26,10 +26,10 @@ export const globalStyles = css`
   }
 
   html,
-  body {
+  body,
+  #root {
     width: 100%;
     height: 100%;
-    line-height: 1.5;
   }
 
   body {
@@ -37,17 +37,6 @@ export const globalStyles = css`
     font-family: 'Freesentation', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-
-  #root {
-    width: 375px;
-    height: 812px;
-    background: white;
-    overflow-y: auto;
   }
 
   button {

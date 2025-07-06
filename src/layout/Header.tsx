@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import { Logo } from '../assets';
-import { spacing } from '../styles/tokens';
 
 const Header = () => {
   return (
@@ -12,16 +11,18 @@ const Header = () => {
 
 export default Header;
 
-export const headerStyle = css`
+// Styles
+const headerStyle = css`
   width: 100%;
-  height: 100px; /* top(40px) + logo height(39px) + bottom padding(21px) */
+  height: 100px;
   position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const logoStyle = css`
-  position: absolute;
-  top: 40px;
-  left: ${spacing.xxl};
+const logoStyle = css`
   width: 196px;
   height: 39px;
 `;
