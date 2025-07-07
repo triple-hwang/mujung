@@ -5,17 +5,18 @@ import SongItem from '../components/SongItem';
 import Section from '../components/Section';
 import Button from '../components/Button';
 import { pageStyles, sectionStyles } from '../styles/utils';
+import { useAuth } from '../store/useAuth';
 
 const VotePage = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [selectedSong, setSelectedSong] = useState<string | null>(null);
+  const { email } = useAuth();
 
   useEffect(() => {
     fetchSongs().then(setSongs);
   }, []);
 
   const handleSubmit = async () => {
-    const email = localStorage.getItem('email');
     if (!email) {
       alert('로그인이 필요합니다.');
       return;
