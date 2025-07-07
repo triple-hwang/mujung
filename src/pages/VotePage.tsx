@@ -11,7 +11,7 @@ const VotePage = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [selectedSong, setSelectedSong] = useState<string | null>(null);
   const { email } = useAuth();
-
+  console.log(email);
   useEffect(() => {
     fetchSongs().then(setSongs);
   }, []);
