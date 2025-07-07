@@ -6,6 +6,7 @@ import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
 import { useEffect, useState } from 'react';
 import { fetchSongs } from '../lib/api';
 import { Song } from '../types/song';
+import {useAuth} from "@/store/useAuth.ts";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -37,20 +38,23 @@ const MainPage = () => {
       setMessage('아직 로그인되지 않았어요.');
     }
   };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     const email = params.get('email');
+    const userId = params.get('user_id');
 
     if (token) {
       localStorage.setItem('access_token', token);
-      if (email) {
-        localStorage.setItem('email', email);
-      }
+      if (email) localStorage.setItem('email', email);
+      if (userId) localStorage.setItem('user_id', userId);
       window.history.replaceState({}, '', '/');
     }
-  }, []);
-  useEffect(() => {
+
+    if (email && userId) {
+      useAuth.getState().setAuth(email, userId);
+    }
     fetchSongs().then(setSongs);
   }, []);
 
