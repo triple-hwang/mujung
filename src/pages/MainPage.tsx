@@ -132,10 +132,10 @@ const MainPage = () => {
           </div>
         </button>
 
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+        {/*<div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <button onClick={handleCheck}>로그인 상태 확인</button>
           {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
-        </div>
+        </div>*/}
       </div>
   );
 };
