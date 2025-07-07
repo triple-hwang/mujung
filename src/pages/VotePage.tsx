@@ -27,6 +27,10 @@ const VotePage = () => {
     if (!selectedSong) return;
 
     try {
+      if (!selectedSong || !userId) {
+        alert('선택된 곡이나 사용자 정보가 없습니다.');
+        return;
+      }
       const res = await submitVote(selectedSong, userId);
       alert(res.data.message);
       navigate('/');
