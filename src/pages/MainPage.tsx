@@ -6,13 +6,13 @@ import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
 import { useEffect, useState } from 'react';
 import { fetchSongs } from '../lib/api';
 import { Song } from '../types/song';
-import {useAuth} from "../store/useAuth";
+import { useAuth } from '../store/useAuth';
 
 const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
   const [message, setMessage] = useState('');
-  console.log(import.meta.env.VITE_GOOGLE_REDIRECT_URI);
+
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
     if (!email) {
@@ -30,6 +30,7 @@ const MainPage = () => {
 
     navigate(path);
   };
+
   const handleCheck = () => {
     const email = localStorage.getItem('email');
     if (email) {
@@ -52,12 +53,14 @@ const MainPage = () => {
       window.history.replaceState({}, '', '/');
     }
 
-    if (email && userId) {
-      useAuth.getState().setAuth(email, userId);
+    const savedEmail = localStorage.getItem('email');
+    const savedUserId = localStorage.getItem('user_id');
+    if (savedEmail && savedUserId) {
+      useAuth.getState().setAuth(savedEmail, savedUserId);
     }
+
     fetchSongs().then(setSongs);
   }, []);
-
 
   const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -127,9 +130,9 @@ const MainPage = () => {
               </p>
             </div>
           </div>
-
         </button>
-        <div style={{marginTop:'2rem' ,textAlign: 'center'}}>
+
+        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <button onClick={handleCheck}>로그인 상태 확인</button>
           {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
         </div>
