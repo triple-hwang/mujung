@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://mujung-back-vercel.vercel.app',
+    baseURL: 'https://mujung-back-vercel.vercel.app/api',
 });
 
 export const fetchSongs = async () => {
@@ -18,7 +18,7 @@ export const submitVote = async (link_id: string, user_id: string) => {
 
 export const searchTrackLinks = async (title: string, artist: string) => {
     const res = await axios.get('/search', {
-        baseURL: 'https://mujung-back-vercel.vercel.app',
+        baseURL: 'https://mujung-back-vercel.vercel.app/api',
         params: {
             title,
             artist,
@@ -31,7 +31,7 @@ export const searchTrackLinks = async (title: string, artist: string) => {
 };
 
 export const createSong = (link: string, email: string) => {
-    return axios.post('https://mujung-back-vercel.vercel.app/songs', {
+    return axios.post('https://mujung-back-vercel.vercel.app/api/songs', {
         link,
         email,
     }).then(res => res.data);
