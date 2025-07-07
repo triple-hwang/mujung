@@ -10,7 +10,7 @@ export const fetchSongs = async () => {
 };
 
 export const submitVote = async (linkId: string, email: string) => {
-    const res = await axios.post('https://mujung-back-vercel.vercel.app/vote', {
+    const res = await axios.post('https://mujung-back-vercel.vercel.app/votes', {
         link_id: linkId,
         email: email,
     });
