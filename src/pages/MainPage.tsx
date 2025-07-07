@@ -53,8 +53,26 @@ const MainPage = () => {
   useEffect(() => {
     fetchSongs().then(setSongs);
   }, []);
+  const token = localStorage.getItem('access_token');
+  const email = localStorage.getItem('email');
+  if (token && email) {
+    setMessage(`✅ 로그인됨: ${email}`);
+  } else {
+    setMessage('❌ 아직 로그인되지 않았어요.');
+  }
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const email = params.get('email');
 
+    if (token && email) {
+      localStorage.setItem('access_token', token);
+      localStorage.setItem('email', email);
+      // query parameter 제거 후 리다이렉트
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
   const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -131,6 +149,7 @@ const MainPage = () => {
         </div>
       </div>
   );
+
 };
 
 export default MainPage;
