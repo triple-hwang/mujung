@@ -50,9 +50,9 @@ const MainPage = () => {
       window.history.replaceState({}, '', '/');
       setMessage(`✅ 로그인됨: ${email}`);
     } else {
-      const storedEmail = localStorage.getItem('email');
-      if (storedEmail) {
-        setMessage(`✅ 로그인됨: ${storedEmail}`);
+      const savedEmail = localStorage.getItem('email');
+      if (savedEmail) {
+        setMessage(`✅ 로그인됨: ${savedEmail}`);
       } else {
         setMessage('❌ 아직 로그인되지 않았어요.');
       }
@@ -70,7 +70,6 @@ const MainPage = () => {
 
   return (
       <div css={pageStyles.container}>
-        {/* 현재 순위 섹션 */}
         <Section title="현재 순위" noPadding>
           <div css={sectionStyles.listWrapper}>
             {songs.map((song) => (
@@ -87,7 +86,6 @@ const MainPage = () => {
           </div>
         </Section>
 
-        {/* 투표하기 섹션 */}
         <button
             type="button"
             css={cardStyles.section}
@@ -109,7 +107,6 @@ const MainPage = () => {
           </div>
         </button>
 
-        {/* 투표 등록 섹션 */}
         <button
             type="button"
             css={cardStyles.section}
@@ -131,7 +128,6 @@ const MainPage = () => {
           </div>
         </button>
 
-        {/* 로그인 상태 확인 */}
         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <button onClick={handleCheck}>로그인 상태 확인</button>
           {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
