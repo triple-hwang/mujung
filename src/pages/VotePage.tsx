@@ -6,12 +6,14 @@ import Section from '../components/Section';
 import Button from '../components/Button';
 import { pageStyles, sectionStyles } from '../styles/utils';
 import { useAuth } from '../store/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const VotePage = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [selectedSong, setSelectedSong] = useState<string | null>(null);
   const { email } = useAuth();
-  console.log(email);
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchSongs().then(setSongs);
   }, []);
@@ -26,7 +28,8 @@ const VotePage = () => {
 
     try {
       const res = await submitVote(selectedSong, email);
-      alert(res.message);
+      alert(res.data.message);
+      navigate('/');
     } catch (err: any) {
       const status = err.response?.status;
       if (status === 400) alert('link_id 누락');

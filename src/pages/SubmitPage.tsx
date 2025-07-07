@@ -3,11 +3,13 @@ import Button from '../components/Button';
 import { pageStyles, formStyles } from '../styles/utils';
 import { createSong } from '../lib/api';
 import color from '../styles/color';
+import { useNavigate } from 'react-router-dom'; // ✅ 수정
 
 const SubmitPage = () => {
   const [songUrl, setSongUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate(); // ✅ 수정
 
   const isValidSpotifyUrl = (url: string) => {
     return url.includes('spotify.com');
@@ -33,6 +35,7 @@ const SubmitPage = () => {
       const res = await createSong(songUrl, email);
       alert(res.message || '노래 등록 성공!');
       setSongUrl('');
+      navigate('/'); // ✅ 메인 페이지로 이동
     } catch (error: any) {
       const status = error.response?.status;
       if (status === 400) setErrorMessage('유효하지 않은 스포티파이 링크입니다.');

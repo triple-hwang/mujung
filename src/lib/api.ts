@@ -9,12 +9,11 @@ export const fetchSongs = async () => {
     return res.data;
 };
 
-export const submitVote = async (linkId: string, email: string) => {
-    const res = await api.post('/votes', {
-        link_id: linkId,
-        email: email,
+export const submitVote = async (link_id: string, user_id: string) => {
+    return axios.post(`/votes`, {
+        link_id,
+        user_id,
     });
-    return res.data;
 };
 
 export const searchTrackLinks = async (title: string, artist: string) => {
