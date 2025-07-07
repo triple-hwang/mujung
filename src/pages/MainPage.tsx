@@ -11,6 +11,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
   const [message, setMessage] = useState('');
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
@@ -19,15 +20,7 @@ const MainPage = () => {
     if (token && email) {
       localStorage.setItem('access_token', token);
       localStorage.setItem('email', email);
-      setMessage(`✅ 로그인됨: ${email}`);
-      window.location.href = '/';
-    } else {
-      const savedEmail = localStorage.getItem('email');
-      if (savedEmail) {
-        setMessage(`✅ 로그인됨: ${savedEmail}`);
-      } else {
-        setMessage('❌ 아직 로그인되지 않았어요.');
-      }
+      window.history.replaceState({}, '', '/');
     }
   }, []);
 
