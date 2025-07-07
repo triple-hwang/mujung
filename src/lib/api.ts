@@ -10,7 +10,7 @@ export const fetchSongs = async () => {
 };
 
 export const submitVote = async (link_id: string, user_id: string) => {
-    return axios.post(`/votes`, {
+    return api.post('/votes', {
         link_id,
         user_id,
     });
