@@ -1,15 +1,27 @@
-import { useEffect, useState } from 'react';
+import { create } from 'zustand';
+import {useEffect} from "react";
+import { supabase } from '../lib/supabase';
 
-export const useAuth = () => {
-    const [email, setEmail] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
+interface AuthState {
+    email: string | null;
+    userId: string | null;
+    setAuth: (email: string, userId: string) => void;
+}
 
-    useEffect(() => {
-        const storedEmail = localStorage.getItem('email');
-        const storedUserId = localStorage.getItem('user_id');
-        setEmail(storedEmail);
-        setUserId(storedUserId);
-    }, []);
+export const useAuth = create<AuthState>((set) => ({
+    email: null,
+    userId: null,
+    setAuth: (email, userId) => set({ email, userId }),
+}));
 
-    return { email, userId };
-};
+useEffect(() => {
+    const getUser = async () => {
+        const { data } = await supabase.auth.getUser();
+        if (data?.user) {
+            const email = data.user.email!;
+            const userId = data.user.id;
+            useAuth.getState().setAuth(email, userId);
+        }
+    };
+    getUser();
+}, []);
