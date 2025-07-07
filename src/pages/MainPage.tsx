@@ -11,7 +11,7 @@ import { useAuth } from '../store/useAuth';
 const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
-  const [message, setMessage] = useState('');
+  /*const [message, setMessage] = useState('');*/
 
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
@@ -31,7 +31,7 @@ const MainPage = () => {
     navigate(path);
   };
 
-  const handleCheck = () => {
+ /* const handleCheck = () => {
     const email = localStorage.getItem('email');
     if (email) {
       setMessage(`로그인됨: ${email}`);
@@ -39,7 +39,7 @@ const MainPage = () => {
       setMessage('아직 로그인되지 않았어요.');
     }
   };
-
+*/
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
