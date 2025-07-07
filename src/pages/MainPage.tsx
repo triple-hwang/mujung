@@ -11,6 +11,29 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
   const [message, setMessage] = useState('');
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const email = params.get('email');
+
+    if (token && email) {
+      localStorage.setItem('access_token', token);
+      localStorage.setItem('email', email);
+      setMessage(`✅ 로그인됨: ${email}`);
+      window.history.replaceState({}, '', '/'); // 쿼리 제거
+    } else {
+      const savedEmail = localStorage.getItem('email');
+      if (savedEmail) {
+        setMessage(`✅ 로그인됨: ${savedEmail}`);
+      } else {
+        setMessage('❌ 아직 로그인되지 않았어요.');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSongs().then(setSongs);
+  }, []);
 
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
@@ -30,41 +53,19 @@ const MainPage = () => {
     navigate(path);
   };
 
+  const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigate(path);
+    }
+  };
+
   const handleCheck = () => {
     const email = localStorage.getItem('email');
     if (email) {
       setMessage(`✅ 로그인됨: ${email}`);
     } else {
       setMessage('❌ 아직 로그인되지 않았어요.');
-    }
-  };
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    const email = params.get('email');
-
-    if (token && email) {
-      localStorage.setItem('access_token', token);
-      localStorage.setItem('email', email);
-      window.history.replaceState({}, '', '/');
-      setMessage(`✅ 로그인됨: ${email}`);
-    } else {
-      const savedEmail = localStorage.getItem('email');
-      if (savedEmail) {
-        setMessage(`✅ 로그인됨: ${savedEmail}`);
-      } else {
-        setMessage('❌ 아직 로그인되지 않았어요.');
-      }
-    }
-
-    fetchSongs().then(setSongs);
-  }, []);
-
-  const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      navigate(path);
     }
   };
 
