@@ -11,7 +11,6 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
   const [message, setMessage] = useState('');
-  console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
   console.log(import.meta.env.VITE_GOOGLE_REDIRECT_URI);
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
@@ -38,6 +37,19 @@ const MainPage = () => {
       setMessage('아직 로그인되지 않았어요.');
     }
   };
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const email = params.get('email');
+
+    if (token) {
+      localStorage.setItem('access_token', token);
+      if (email) {
+        localStorage.setItem('email', email);
+      }
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
   useEffect(() => {
     fetchSongs().then(setSongs);
   }, []);
