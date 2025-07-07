@@ -31,6 +31,7 @@ const VotePage = () => {
         alert('선택된 곡이나 사용자 정보가 없습니다.');
         return;
       }
+      console.log('Submitting vote with:', { selectedSong, userId });
       const res = await submitVote(selectedSong, userId);
       alert(res.data.message);
       navigate('/');
