@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const VotePage = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [selectedSong, setSelectedSong] = useState<string | null>(null);
-  const { email } = useAuth();
+  const { email, userId } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const VotePage = () => {
     if (!selectedSong) return;
 
     try {
-      const res = await submitVote(selectedSong, email);
+      const res = await submitVote(selectedSong, userId);
       alert(res.data.message);
       navigate('/');
     } catch (err: any) {
