@@ -19,6 +19,10 @@ const VotePage = () => {
   }, []);
 
   const handleSubmit = async () => {
+    console.log('📍handleSubmit 시작됨');
+    console.log('selectedSong:', selectedSong);
+    console.log('userId:', userId);
+
     if (!email) {
       alert('로그인이 필요합니다.');
       return;
@@ -31,19 +35,12 @@ const VotePage = () => {
         alert('선택된 곡이나 사용자 정보가 없습니다.');
         return;
       }
-      console.log('Submitting vote with:', { selectedSong, userId });
+      console.log('🔥 submitVote 호출 직전', { selectedSong, userId });
       const res = await submitVote(selectedSong, userId);
       alert(res.data.message);
       navigate('/');
     } catch (err: any) {
-      const status = err.response?.status;
-      if (status === 400) alert('link_id 누락');
-      else if (status === 403) alert('bssm 이메일만 허용됩니다.');
-      else if (status === 404) alert('유저 정보가 없습니다.');
-      else if (status === 409) alert('이미 투표했습니다.');
-      else alert('서버 오류');
-    }
-  };
+      console.error('❌ 에러 발생', err);};
 
   return (
       <div css={pageStyles.container}>
