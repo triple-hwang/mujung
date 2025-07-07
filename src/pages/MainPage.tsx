@@ -20,7 +20,7 @@ const MainPage = () => {
       localStorage.setItem('access_token', token);
       localStorage.setItem('email', email);
       setMessage(`✅ 로그인됨: ${email}`);
-      window.history.replaceState({}, '', '/'); // 쿼리 제거
+      window.location.href = '/';
     } else {
       const savedEmail = localStorage.getItem('email');
       if (savedEmail) {
