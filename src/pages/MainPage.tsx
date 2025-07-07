@@ -13,14 +13,11 @@ const MainPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    const email = params.get('email');
-
-    if (token && email) {
-      localStorage.setItem('access_token', token);
-      localStorage.setItem('email', email);
-      window.history.replaceState({}, '', '/');
+    const email = localStorage.getItem('email');
+    if (email) {
+      setMessage(`✅ 로그인됨: ${email}`);
+    } else {
+      setMessage('❌ 아직 로그인되지 않았어요.');
     }
   }, []);
 
