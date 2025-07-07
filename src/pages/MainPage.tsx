@@ -11,7 +11,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
   const [message, setMessage] = useState('');
-  console.log(import.meta.env.VITE_GOOGLE_REDIRECT_URI);
+
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
     if (!email) {
@@ -29,37 +29,15 @@ const MainPage = () => {
 
     navigate(path);
   };
+
   const handleCheck = () => {
     const email = localStorage.getItem('email');
     if (email) {
-      setMessage(`로그인됨: ${email}`);
+      setMessage(`✅ 로그인됨: ${email}`);
     } else {
-      setMessage('아직 로그인되지 않았어요.');
+      setMessage('❌ 아직 로그인되지 않았어요.');
     }
   };
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    const email = params.get('email');
-
-    if (token) {
-      localStorage.setItem('access_token', token);
-      if (email) {
-        localStorage.setItem('email', email);
-      }
-      window.history.replaceState({}, '', '/');
-    }
-  }, []);
-  useEffect(() => {
-    fetchSongs().then(setSongs);
-  }, []);
-  const token = localStorage.getItem('access_token');
-  const email = localStorage.getItem('email');
-  if (token && email) {
-    setMessage(`✅ 로그인됨: ${email}`);
-  } else {
-    setMessage('❌ 아직 로그인되지 않았어요.');
-  }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -69,10 +47,20 @@ const MainPage = () => {
     if (token && email) {
       localStorage.setItem('access_token', token);
       localStorage.setItem('email', email);
-      // query parameter 제거 후 리다이렉트
       window.history.replaceState({}, '', '/');
+      setMessage(`✅ 로그인됨: ${email}`);
+    } else {
+      const storedEmail = localStorage.getItem('email');
+      if (storedEmail) {
+        setMessage(`✅ 로그인됨: ${storedEmail}`);
+      } else {
+        setMessage('❌ 아직 로그인되지 않았어요.');
+      }
     }
+
+    fetchSongs().then(setSongs);
   }, []);
+
   const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -141,15 +129,15 @@ const MainPage = () => {
               </p>
             </div>
           </div>
-
         </button>
-        <div style={{marginTop:'2rem' ,textAlign: 'center'}}>
+
+        {/* 로그인 상태 확인 */}
+        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <button onClick={handleCheck}>로그인 상태 확인</button>
           {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
         </div>
       </div>
   );
-
 };
 
 export default MainPage;
