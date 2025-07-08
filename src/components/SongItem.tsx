@@ -37,7 +37,7 @@ const SongItem = ({
     }
   };
 
-  const handleLinkClick = async (e) => {
+  const handleLinkClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     try {
       const result = await searchTrackLinks(songName, songArtist);
@@ -48,7 +48,7 @@ const SongItem = ({
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (showRadio && onSelect && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       onSelect();

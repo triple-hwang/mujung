@@ -5,7 +5,7 @@ import Section from '../components/Section';
 import SongItem from '../components/SongItem';
 import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
 import { useEffect, useState } from 'react';
-import {fetchSongs, topSongs} from '../lib/api';
+import {topSongs} from '../lib/api';
 import { Song } from '../types/song';
 import { useAuth } from '../store/useAuth';
 
