@@ -37,13 +37,13 @@ const SongItem = ({
     }
   };
 
-  const handleLinkClick = async (e: React.MouseEvent) => {
+  const handleLinkClick = async (e) => {
     e.stopPropagation();
     try {
       const result = await searchTrackLinks(songName, songArtist);
       setLinks(result);
       setOpenId(linkId);
-    } catch (error) {
+    } catch {
       alert('링크를 찾을 수 없습니다.');
     }
   };

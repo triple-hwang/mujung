@@ -17,19 +17,13 @@ export const submitVote = async (link_id: string, user_id: string) => {
     });
 };
 
-export const searchTrackLinks = async (title: string, artist: string) => {
-    const res = await axios.get('/search', {
-        baseURL: 'https://mujung-back-fastapi.onrender.com',
-        params: {
-            title,
-            artist,
-        },
-    });
-    return res.data as {
-        spotify_url: string;
-        youtube_search_url: string;
-    };
-};
+export async function searchTrackLinks(title: string, artist: string) {
+    const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/search?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}`
+    );
+    if (!res.ok) throw new Error("검색 실패");
+    return await res.json();
+}
 
 export const createSong = (link: string, email: string) => {
     return axios.post('https://mujung-back-fastapi.onrender.com/songs', {

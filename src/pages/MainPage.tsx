@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { useNavigate } from 'react-router-dom';
 import { VoteImg, SubmitImg } from '../assets';
 import Section from '../components/Section';
@@ -11,27 +12,17 @@ import { useAuth } from '../store/useAuth';
 const MainPage = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState<Song[]>([]);
-  /*const [message, setMessage] = useState('');*/
 
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
     if (!email) {
-      window.location.href =
-          `${import.meta.env.VITE_BACKEND_URL}/oauth/google`; // ← 이 부분만 변경긔!
+      // 백엔드로 먼저 요청해서 세션+state 쿠키를 받고 구글로 리다이렉트되게 하기긔~
+      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/oauth/google`;
       return;
     }
     navigate(path);
   };
 
- /* const handleCheck = () => {
-    const email = localStorage.getItem('email');
-    if (email) {
-      setMessage(`로그인됨: ${email}`);
-    } else {
-      setMessage('아직 로그인되지 않았어요.');
-    }
-  };
-*/
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
@@ -123,11 +114,6 @@ const MainPage = () => {
             </div>
           </div>
         </button>
-
-        {/*<div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <button onClick={handleCheck}>로그인 상태 확인</button>
-          {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
-        </div>*/}
       </div>
   );
 };
