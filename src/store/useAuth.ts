@@ -2,12 +2,12 @@ import { create } from 'zustand';
 
 interface AuthState {
     email: string | null;
-    userId: string | null;
+    user_id: string | null;
     setAuth: (email: string, userId: string) => void;
 }
 
 export const useAuth = create<AuthState>((set) => ({
     email: null,
-    userId: null,
-    setAuth: (email, userId) => set({ email, userId }),
+    user_id: null,
+    setAuth: (email, user_id) => set({ email, user_id }),
 }));

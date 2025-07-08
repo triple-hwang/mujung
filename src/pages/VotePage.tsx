@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const VotePage = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [selectedSong, setSelectedSong] = useState<string | null>(null);
-  const { email, userId } = useAuth();
+  const { email, user_id } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const VotePage = () => {
   const handleSubmit = async () => {
     console.log('📍handleSubmit 시작됨');
     console.log('selectedSong:', selectedSong);
-    console.log('userId:', userId);
+    console.log('userId:', user_id);
 
     if (!email) {
       alert('로그인이 필요합니다.');
@@ -31,12 +31,12 @@ const VotePage = () => {
     if (!selectedSong) return;
 
     try {
-      if (!selectedSong || !userId) {
+      if (!selectedSong || !user_id) {
         alert('선택된 곡이나 사용자 정보가 없습니다.');
         return;
       }
-      console.log('🔥 submitVote 호출 직전', {selectedSong, userId});
-      const res = await submitVote(selectedSong, userId);
+      console.log('🔥 submitVote 호출 직전', {selectedSong, user_id});
+      const res = await submitVote(selectedSong, user_id);
       alert(res.data.message);
       navigate('/');
     } catch (err: any) {
