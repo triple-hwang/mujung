@@ -24,6 +24,10 @@ const MainPage = () => {
           '&scope=openid%20email%20profile' +
           '&access_type=offline' +
           '&prompt=consent';
+
+      console.log("🔥 최종 redirect_uri 확인:", import.meta.env.VITE_GOOGLE_REDIRECT_URI);
+      console.log("📦 전체 구글 로그인 URL:", googleLoginUrl);
+
       window.location.href = googleLoginUrl;
       return;
     }
