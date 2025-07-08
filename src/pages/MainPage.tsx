@@ -6,12 +6,12 @@ import SongItem from '../components/SongItem';
 import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
 import { useEffect, useState } from 'react';
 import {topSongs} from '../lib/api';
-import { Song } from '../types/song';
+import { TopSong } from '../types/song';
 import { useAuth } from '../store/useAuth';
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const [songs, setSongs] = useState<Song[]>([]);
+  const [songs, setSongs] = useState<TopSong[]>([]);
 
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
@@ -41,11 +41,10 @@ const MainPage = () => {
       useAuth.getState().setAuth(savedEmail, savedUserId);
     }
     topSongs()
-        .then(setSongs)
+       .then(setSongs)
         .catch((err) => {
-          console.error('TopSongs 불러오기 실패했긔😿', err);
-        });
-    topSongs().then(setSongs);
+      console.error('TopSongs 불러오기 실패했긔😿', err);
+    });
   }, []);
 
   const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
@@ -59,15 +58,15 @@ const MainPage = () => {
       <div css={pageStyles.container}>
         <Section title="현재 순위" noPadding>
           <div css={sectionStyles.listWrapper}>
-            {songs.map((song) => (
+            {songs.slice(0, 5).map((song, idx) => (
                 <SongItem
-                    key={song.link_id}
-                    title={`${song.song_name} - ${song.song_artist}`}
-                    songName={song.song_name}
-                    songArtist={song.song_artist}
-                    linkId={song.link_id}
-                    spotifyUrl={song.link}
-                    youtubeUrl=""
+                            key={song.link_id}
+                            title={`${idx + 1}. ${song.name} - ${song.artist}`}   // name, artist 사용
+                            songName={song.name}
+                            songArtist={song.artist}
+                            linkId={song.link_id}
+                            spotifyUrl={`https://open.spotify.com/track/${song.link_id}`}
+                            youtubeUrl={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${song.name} ${song.artist}`)}`}
                 />
             ))}
           </div>

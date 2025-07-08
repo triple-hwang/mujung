@@ -4,3 +4,10 @@ export interface Song {
     song_artist: string;
     link: string;
 }
+
+export interface TopSong {
+    link_id: string
+    name: string
+    artist: string
+    votes: number
+}
