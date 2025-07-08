@@ -5,7 +5,7 @@ import Section from '../components/Section';
 import SongItem from '../components/SongItem';
 import { pageStyles, sectionStyles, cardStyles } from '../styles/utils';
 import { useEffect, useState } from 'react';
-import { fetchSongs } from '../lib/api';
+import {fetchSongs, topSongs} from '../lib/api';
 import { Song } from '../types/song';
 import { useAuth } from '../store/useAuth';
 
@@ -16,7 +16,6 @@ const MainPage = () => {
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
     if (!email) {
-      // 백엔드로 먼저 요청해서 세션+state 쿠키를 받고 구글로 리다이렉트되게 하기긔~
       window.location.href = `${import.meta.env.VITE_BACKEND_URL}/oauth/google`;
       return;
     }
@@ -41,8 +40,12 @@ const MainPage = () => {
     if (savedEmail && savedUserId) {
       useAuth.getState().setAuth(savedEmail, savedUserId);
     }
-
-    fetchSongs().then(setSongs);
+    topSongs()
+        .then(setSongs)
+        .catch((err) => {
+          console.error('TopSongs 불러오기 실패했긔😿', err);
+        });
+    topSongs().then(setSongs);
   }, []);
 
   const handleKeyDown = (path: string) => (e: React.KeyboardEvent) => {
@@ -54,7 +57,6 @@ const MainPage = () => {
 
   return (
       <div css={pageStyles.container}>
-        {/* 현재 순위 섹션 */}
         <Section title="현재 순위" noPadding>
           <div css={sectionStyles.listWrapper}>
             {songs.map((song) => (
