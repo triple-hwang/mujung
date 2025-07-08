@@ -16,22 +16,10 @@ const MainPage = () => {
   const handleCardClick = (path: string) => {
     const email = localStorage.getItem('email');
     if (!email) {
-      const googleLoginUrl =
-          'https://accounts.google.com/o/oauth2/v2/auth' +
-          `?client_id=${import.meta.env.VITE_GOOGLE_CLIENT_ID}` +
-          `&redirect_uri=${import.meta.env.VITE_GOOGLE_REDIRECT_URI}` +
-          '&response_type=code' +
-          '&scope=openid%20email%20profile' +
-          '&access_type=offline' +
-          '&prompt=consent';
-
-      console.log("🔥 최종 redirect_uri 확인:", import.meta.env.VITE_GOOGLE_REDIRECT_URI);
-      console.log("📦 전체 구글 로그인 URL:", googleLoginUrl);
-
-      window.location.href = googleLoginUrl;
+      window.location.href =
+          `${import.meta.env.VITE_BACKEND_URL}/oauth/google`; // ← 이 부분만 변경긔!
       return;
     }
-
     navigate(path);
   };
 
