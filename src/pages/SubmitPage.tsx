@@ -10,7 +10,7 @@ const SubmitPage = () => {
   const [songUrl, setSongUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();정
+  const navigate = useNavigate();
 
   const isValidSpotifyUrl = (url: string) => {
     return url.includes('spotify.com');
