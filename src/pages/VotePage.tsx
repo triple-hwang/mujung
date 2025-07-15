@@ -35,12 +35,11 @@ const VotePage = () => {
         alert('선택된 곡이나 사용자 정보가 없습니다.');
         return;
       }
-      console.log('🔥 submitVote 호출 직전', {selectedSong, user_id});
       const res = await submitVote(selectedSong, user_id);
       alert(res.data.message);
       navigate('/');
     } catch (err: any) {
-      console.error('❌ 에러 발생', err);
+      console.error('에러 발생', err);
     }
   }
 

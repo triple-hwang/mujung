@@ -32,6 +32,11 @@ export const createSong = (link: string, email: string) => {
     }).then(res => res.data);
 };
 
+export const SpotifytopSongs = async () => {
+    const res = await api.get('/spotify');
+    return res.data;
+};
+
 export const topSongs= async () => {
     const res = await api.get('/topsongs');
     return res.data;
