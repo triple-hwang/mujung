@@ -4,13 +4,13 @@ import { pageStyles, formStyles } from '../styles/utils';
 import { createSong } from '../lib/api';
 import color from '../styles/color';
 import { useNavigate } from 'react-router-dom';
-import SpotifyRankList from "@/components/SpotifyRankList.tsx"; // ✅ 수정
+import SpotifyRankList from "../components/SpotifyRankList.tsx";
 
 const SubmitPage = () => {
   const [songUrl, setSongUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); // ✅ 수정
+  const navigate = useNavigate();정
 
   const isValidSpotifyUrl = (url: string) => {
     return url.includes('spotify.com');
