@@ -68,7 +68,7 @@ export default SpotifyItems;
 const itemStyle = css`
   width: 100%;
   padding: ${layout.padding.item};
-  background:#DAFFE7;
+  background:#FFFFFF;
   border-radius: ${borderRadius.small};
   cursor: pointer;
   transition: ${animations.transition.fast};

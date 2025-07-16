@@ -4,7 +4,6 @@ import SpotifyRank from '../assets/spotifyrank.svg';
 import {borderRadius, layout} from "../styles/index";
 import styled from "@emotion/styled";
 import SpotifyItems from "../components/SpotifyItems.tsx";
-import color from "../styles/color.ts";
 interface SongData {
     rank: number;
     track_name: string;
@@ -34,7 +33,7 @@ const SpotifyRankList = () => {
 
     return (
         <StyledSpotifyRank>
-            <img src={SpotifyRank} alt="Spotify Rank Logo" style={{ width: '20px' }} />
+            <img src={SpotifyRank} alt="Spotify Rank Logo" style={{ width: '60px' }} />
 
             {songs.map((item) => (
                 <SpotifyItems
@@ -53,7 +52,7 @@ export default SpotifyRankList;
 
 const StyledSpotifyRank=styled.div`
     padding: ${layout.padding.sectionFull};
-    background: ${color.white};
+    background: #EBEFFF;
     border-radius: ${borderRadius.medium};
     display: flex;
     flex-direction: column;
