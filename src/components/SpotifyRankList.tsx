@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import SongItem from './SongItem';
-import { SpotifytopSongs } from '../lib/api'; // 경로는 실제 위치에 맞게
-
+import { SpotifytopSongs } from '../lib/api';
+import SpotifyRank from '../assets/spotifyrank.svg';
+import {borderRadius, layout} from "@/styles";
+import styled from "@emotion/styled";
+import SpotifyItems from "@/components/SpotifyItems.tsx";
 interface SongData {
     rank: number;
     track_name: string;
@@ -15,7 +17,7 @@ const SpotifyRankList = () => {
     useEffect(() => {
         const loadSongs = async () => {
             try {
-                const data = await SpotifytopSongs(); // ✅ 이 함수 사용
+                const data = await SpotifytopSongs();
                 setSongs(data);
             } catch (error) {
                 console.error('곡 목록을 불러오지 못했습니다.', error);
@@ -30,9 +32,11 @@ const SpotifyRankList = () => {
     if (loading) return <div>로딩 중...</div>;
 
     return (
-        <div>
+        <StyledSpotifyRank>
+            <img src={SpotifyRank} alt="Spotify Rank Logo" style={{ width: '200px', marginBottom: '20px' }} />
+
             {songs.map((item) => (
-                <SongItem
+                <SpotifyItems
                     key={item.rank}
                     title={`${item.track_name} - ${item.artists}`}
                     songName={item.track_name}
@@ -40,8 +44,17 @@ const SpotifyRankList = () => {
                     linkId={`${item.rank}-${item.track_name}`}
                 />
             ))}
-        </div>
+        </StyledSpotifyRank>
     );
 };
 
 export default SpotifyRankList;
+
+const StyledSpotifyRank=styled.div`
+    padding: ${layout.padding.sectionFull};
+    background: #343434;
+    border-radius: ${borderRadius.medium};
+    display: flex;
+    flex-direction: column;
+    gap: ${layout.gap.medium};
+`
