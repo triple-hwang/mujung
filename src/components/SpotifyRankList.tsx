@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { SpotifytopSongs } from '../lib/api';
 import SpotifyRank from '../assets/spotifyrank.svg';
-import {borderRadius, layout} from "@/styles";
+import {borderRadius, layout} from "../styles/index";
 import styled from "@emotion/styled";
-import SpotifyItems from "@/components/SpotifyItems.tsx";
+import SpotifyItems from "../components/SpotifyItems.tsx";
 interface SongData {
     rank: number;
     track_name: string;
