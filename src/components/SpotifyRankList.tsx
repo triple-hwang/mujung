@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SpotifytopSongs } from '../lib/api';
-import SpotifyRank from '../assets/spotifyrank2.svg';
+import SpotifyRank from '../assets/spotifyrank.svg';
 import {borderRadius, layout} from "../styles/index";
 import styled from "@emotion/styled";
 import SpotifyItems from "../components/SpotifyItems.tsx";
+import color from "@/styles/color.ts";
 interface SongData {
     rank: number;
     track_name: string;
@@ -52,7 +53,7 @@ export default SpotifyRankList;
 
 const StyledSpotifyRank=styled.div`
     padding: ${layout.padding.sectionFull};
-    background: #343434;
+    background: ${color.white};
     border-radius: ${borderRadius.medium};
     display: flex;
     flex-direction: column;
