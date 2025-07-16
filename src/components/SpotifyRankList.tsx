@@ -4,7 +4,7 @@ import SpotifyRank from '../assets/spotifyrank.svg';
 import {borderRadius, layout} from "../styles/index";
 import styled from "@emotion/styled";
 import SpotifyItems from "../components/SpotifyItems.tsx";
-import color from "@/styles/color.ts";
+import color from "../styles/color.ts";
 interface SongData {
     rank: number;
     track_name: string;
