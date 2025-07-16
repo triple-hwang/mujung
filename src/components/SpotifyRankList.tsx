@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SpotifytopSongs } from '../lib/api';
-import SpotifyRank from '../assets/spotifyrank.svg';
+import SpotifyRank from '../assets/spotifyrank2.svg';
 import {borderRadius, layout} from "../styles/index";
 import styled from "@emotion/styled";
 import SpotifyItems from "../components/SpotifyItems.tsx";
