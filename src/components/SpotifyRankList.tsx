@@ -33,7 +33,7 @@ const SpotifyRankList = () => {
 
     return (
         <StyledSpotifyRank>
-            <img src={SpotifyRank} alt="Spotify Rank Logo" style={{ width: '60px' }} />
+            <img src={SpotifyRank} alt="Spotify Rank Logo" style={{ width: '80px' }} />
 
             {songs.map((item) => (
                 <SpotifyItems
